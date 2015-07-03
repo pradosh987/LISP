@@ -1,17 +1,24 @@
-(define (timed-prime-test n)
+;incomeplete  
+
+(define (prime-test n)
 (newline)
 (display n)
-(start-prime-test n (runtime)))
+;(display (runtime))
+(start-prime-test n (runtime))
+(newline))
 
 
 (define (start-prime-test n start-time)
 (if (prime? n)
-((display start-time)(display (runtime))report-prime (- (runtime) start-time))))
+(report-prime (- (runtime) start-time))))
 
 
 (define (report-prime elapsed-time)
 (display " *** ")
-(display elapsed-time))
+(newline)
+;(display (runtime))
+(display elapsed-time)
+)
 
 (define (prime? n)
 (= n (smallest-divisor n)))
@@ -30,4 +37,16 @@
 (define (square x)
   (* x x))
 
-(timed-prime-test 13)
+(define (find-small-prime start)
+  (find-primes start 0 3))
+
+
+(define (find-primes number found total)
+  (cond ((= found total) found)
+        ((prime-test (+ number 1))(find-primes (+ number 1) (+ found 1) total ) )
+        
+        (else (find-primes (+ number 1) found total )))
+        ) 
+
+(find-small-prime 1000)
+;(prime-test 100123456789)
