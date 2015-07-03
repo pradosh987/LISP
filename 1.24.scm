@@ -1,14 +1,9 @@
 ;incomete
-
-
 (define (next d)
   (cond((= d 2) 3)
         (else(+ d 2))))
 
-
-
 (define(square x)(* x x))
-
 
 (define (smallest-divisor n)
 	(find-divisor n 2))
@@ -21,15 +16,30 @@
 (define (divides? a b)
 	(= (remainder b a) 0))
 
-
 (define (prime? n)
 (= n (smallest-divisor n)))
+
+(define (fast-prime? n times)
+(cond ((= times 0) true)
+((fermat-test n) (fast-prime? n (- times 1)))
+(else false)))
+
+(define (expmod base exp m)
+  (cond ((= exp 0) 1)
+    ((even? exp)
+    (remainder (square (expmod base (/ exp 2) m)) m))
+    (else (remainder (* base (expmod base (- exp 1) m)) m))))
+
+(define (fermat-test n)
+(define (try-it a)
+(= (expmod a n n) a))
+(try-it (+ 1 (random (- n 1)))))
 
 (define (timed-prime-test n)
   (start-prime-test n (runtime)))
 	
 (define (start-prime-test n start-time)
-  (if (prime? n)
+  (if (fast-prime? n 1000)
 	(report-prime n (- (runtime) start-time))))
 
 (define (report-prime n elapsed-time)
@@ -51,20 +61,17 @@
  
  (iterate 10000000000 10000000300)
  
-;output
-;10000000279     ***     .14
-;10000000277     ***     .13999999999999999
-;10000000259     ***     .12
-;10000000207     ***     .12
-;10000000147     ***     .12
-;10000000141     ***     .12
-;10000000121     ***     .12
-;10000000103     ***     .14000000000000012
-;10000000097     ***     .11999999999999988
-;10000000069     ***     .11999999999999988
-;10000000061     ***     .1200000000000001
-;10000000033     ***     .11999999999999988
-;10000000019     ***     .1200000000000001
+;10000000279     ***     0.
+;10000000277     ***     0.
+;10000000259     ***     0.
+;10000000207     ***     0.
+;10000000147     ***     0.
+;10000000141     ***     0.
+;10000000121     ***     0.
+;10000000103     ***     0.
+;10000000097     ***     0.
+;10000000069     ***     0.
+;10000000061     ***     0.
+;10000000033     ***     0.
+;10000000019     ***     0.
 
-
-;increased ration 1.8
