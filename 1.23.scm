@@ -5,25 +5,21 @@
   (cond((= d 2) 3)
         (else(+ d 2))))
 
-
-
 (define(square x)(* x x))
 
-
 (define (smallest-divisor n)
-	(find-divisor n 2))
+  (find-divisor n 2))
 
 (define (find-divisor n test-divisor)
-	(cond ((> (square test-divisor) n) n)
-	  ((divides? test-divisor n) test-divisor)
-   	(else (find-divisor n (next test-divisor)))))
+  (cond ((> (square test-divisor) n) n)
+	((divides? test-divisor n) test-divisor)
+   	(else (find-divisor n (next test-divisor )))))
 
 (define (divides? a b)
-	(= (remainder b a) 0))
-
+  (= (remainder b a) 0))
 
 (define (prime? n)
-(= n (smallest-divisor n)))
+  (= n (smallest-divisor n)))
 
 (define (timed-prime-test n)
   (start-prime-test n (runtime)))
@@ -38,33 +34,59 @@
   (display "     ***     ")
   (display elapsed-time))
 
-(define (searchPrime f l)
-  (if(even? f) 
-    (iterate (+ f 1) l)
-    (iterate f l)))
  
-(define (iterate f l)
-  (cond((<= f l) 
-  (and (searchPrime (+ f 2) l) (timed-prime-test f) ))))
+(define (iterate n count)
+ (cond((> count 0) 
+  (if(prime? n)
+      ((iterate (+ 2 n) (- count 1))
+      	(timed-prime-test n))
+      (iterate (+ 2 n) count)))
+       ))
 
+
+(define (next d)
+  (cond((= (remainder d 2) 0) (+ d 1))
+        (else(+ d 2))))
+  
+(define (search-for-primes n count)  
+  (if(even? n) 
+    (iterate (+ n 1) 3)
+    (iterate n 3)))
+
+(search-for-primes 100000000 3)
+
+;//Without next 
+;100000007     ***     2.0000000000000018e-2
+;100000037     ***     2.0000000000000018e-2
+;100000039     ***     1.9999999999999962e-2
+ 
+ ;//with next
+;100000007     ***     2.0000000000000018e-2
+;100000037     ***     2.0000000000000018e-2
+;100000039     ***     2.0000000000000018e-2
 
  
- (iterate 10000000000 10000000300)
  
-;output
-;10000000279     ***     .14
-;10000000277     ***     .13999999999999999
-;10000000259     ***     .12
-;10000000207     ***     .12
-;10000000147     ***     .12
-;10000000141     ***     .12
-;10000000121     ***     .12
-;10000000103     ***     .14000000000000012
-;10000000097     ***     .11999999999999988
-;10000000069     ***     .11999999999999988
-;10000000061     ***     .1200000000000001
-;10000000033     ***     .11999999999999988
-;10000000019     ***     .1200000000000001
+;//Without next
+;1000000007     ***     .06000000000000005
+;1000000009     ***     .07999999999999996
+;1000000021     ***     .07999999999999996
+
+;//	with next
+;1000000007     ***     4.0000000000000036e-2
+;1000000009     ***     4.0000000000000036e-2
+;1000000021     ***     4.0000000000000036e-2
 
 
-;increased ration 1.8
+
+;WITHOUT NEXT
+;10000000019     ***     .20000000000000018
+;10000000033     ***     .19999999999999996
+;10000000061     ***     .20000000000000018
+
+;WITH NEXT
+;10000000019     ***     .13999999999999999
+;10000000033     ***     .14
+;10000000061     ***     .12
+
+
