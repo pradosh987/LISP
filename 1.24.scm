@@ -1,4 +1,3 @@
-;incomete
 (define (next d)
   (cond((= d 2) 3)
         (else(+ d 2))))
@@ -31,9 +30,9 @@
     (else (remainder (* base (expmod base (- exp 1) m)) m))))
 
 (define (fermat-test n)
-(define (try-it a)
+(define (try-itado a)
 (= (expmod a n n) a))
-(try-it (+ 1 (random (- n 1)))))
+(try-itado (+ 1 (random (- n 1)))))
 
 (define (timed-prime-test n)
   (start-prime-test n (runtime)))
@@ -48,30 +47,28 @@
   (display "     ***     ")
   (display elapsed-time))
 
-(define (searchPrime f l)
-  (if(even? f) 
-    (iterate (+ f 1) l)
-    (iterate f l)))
+(define (iterate n count)
+ (cond((> count 0) 
+  (if(prime? n)
+      ((iterate (+ 2 n) (- count 1))
+        (timed-prime-test n))
+      (iterate (+ 2 n) count)))
+       ))
+
+  
+(define (search-for-primes n count)  
+  (if(even? n) 
+    (iterate (+ n 1) 3)
+    (iterate n 3)))
+
+(search-for-primes 1000000000 3)
  
-(define (iterate f l)
-  (cond((<= f l) 
-  (and (searchPrime (+ f 2) l) (timed-prime-test f) ))))
+;OUTPUT
+;1000003     ***     .06000000000000005
+;1000033     ***     .06000000000000005
+;1000037     ***     .06000000000000005
 
 
- 
- (iterate 10000000000 10000000300)
- 
-;10000000279     ***     0.
-;10000000277     ***     0.
-;10000000259     ***     0.
-;10000000207     ***     0.
-;10000000147     ***     0.
-;10000000141     ***     0.
-;10000000121     ***     0.
-;10000000103     ***     0.
-;10000000097     ***     0.
-;10000000069     ***     0.
-;10000000061     ***     0.
-;10000000033     ***     0.
-;10000000019     ***     0.
-
+;1000000007     ***     .09999999999999987
+;1000000009     ***     .08000000000000007
+;1000000021     ***     .08000000000000007

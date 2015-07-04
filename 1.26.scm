@@ -1,0 +1,1 @@
+Because it call expmod twice which increases recursive call n times, hence it has O(n) time complexity
