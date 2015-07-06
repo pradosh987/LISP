@@ -1,0 +1,20 @@
+
+;Recursive
+(define (cont-frac n d k)
+  (define (iter a b)
+    (if(= a b)
+      (/ (n a) (d a))  
+      (/ (n a) (+ (d a) (iter (+ a 1) b))) ))
+  (iter 1 k))
+
+(cont-frac (lambda (i) 1)
+            ()
+            100)
+
+;(cont-frac-iterative (lambda (i) 1.0)
+;  (lambda (i) 1.0)
+;  100)
+
+;(cont-frac (lambda (i) 1.0)
+;  (lambda (i) 1.0)
+;  12)
