@@ -4,10 +4,6 @@
   (lambda(x)
     (f (g x)) ))
 
-
-
-
-
 (define (repeated a b)
   (lambda (x)
     (define (proc c result)

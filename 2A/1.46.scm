@@ -11,7 +11,7 @@
 
 (define (sqr x g)
   (define (improve guess)
-  (average guess (/ x guess)))
+  	(average guess (/ x guess)))
   (define (good-enough? guess)
     (< (abs (- (square guess) x)) 0.0001))
   ((iterative-improve improve good-enough?) (improve g)))
