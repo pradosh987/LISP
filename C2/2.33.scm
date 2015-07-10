@@ -1,0 +1,35 @@
+(define (accumulate op initial squence)
+  (if (null? squence)
+      initial
+      (op (car squence) 
+          (accumulate op initial (cdr squence)))))
+
+(define (enumerate-tree tree)
+  (cond ((null? tree) '())
+        ((not (pair? tree)) (list tree))
+        (else (append (enumerate-tree (car tree))
+                      (enumerate-tree (cdr tree))))))
+
+(define (map p sequence)
+  (accumulate (lambda (x y) 
+                (cons (p x) y))
+              '()
+              sequence))
+(newline)
+(display "Mapping to square: ")
+(display (map square (list 1 2 3)))
+;(1 4 9)
+
+(newline)
+(display "Append: ")
+(define (append seq1 seq2)
+  (accumulate cons seq2 seq1))
+( display (append (list 3 4) (list 53 3)))
+
+
+(newline)
+(display "Length: ")
+(define (length sequence)
+  (accumulate (lambda (x y) (+ 1 y)) 0 sequence))
+(display (length (list 3 5 2)))
+;(enumerate-tree (list 1 (list 2 (list 3 4)) 5))
